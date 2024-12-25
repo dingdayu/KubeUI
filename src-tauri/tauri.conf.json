@@ -12,9 +12,22 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "KubeUI",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "visible": false
+      },
+      {
+        "label": "splashscreen",
+        "width": 400,
+        "height": 200,
+        "resizable": false,
+        "transparent": true,
+        "decorations": false,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "url": "splashscreen.html"
       }
     ],
     "security": {
@@ -40,6 +53,14 @@
         "https://kubeui.xyser.com/{{target}}/{{arch}}/{{current_version}}",
         "https://github.com/dingdayu/kubeui/releases/latest/download/latest.json"
       ]
+    },
+    "deep-link": {
+      "mobile": [
+        { "host": "kubeui.xyser.com", "pathPrefix": ["/open"] }
+      ],
+      "desktop": {
+        "schemes": ["kubeui"]
+      }
     }
   }
 }
