@@ -1,21 +1,6 @@
-use tauri::{AppHandle, Manager};
+use tauri::Manager;
 
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-#[tauri::command]
-fn close_splashscreen(app: AppHandle) {
-    // Show main window
-    app.get_webview_window("main").unwrap().show().unwrap();
-    // Close splashscreen
-    app.get_webview_window("splashscreen")
-        .unwrap()
-        .close()
-        .unwrap();
-}
+mod cmds;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -34,7 +19,7 @@ pub fn run() {
                 .set_focus();
         }));
     }
-    
+
     builder
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_dialog::init())
@@ -49,7 +34,10 @@ pub fn run() {
             }
             Ok::<(), Box<dyn std::error::Error>>(())
         })
-        .invoke_handler(tauri::generate_handler![greet, close_splashscreen])
+        .invoke_handler(tauri::generate_handler![
+            cmds::greet,
+            cmds::close_splashscreen
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
