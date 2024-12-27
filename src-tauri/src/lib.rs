@@ -36,7 +36,8 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             cmds::greet,
-            cmds::close_splashscreen
+            cmds::close_splashscreen,
+            cmds::list_events
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

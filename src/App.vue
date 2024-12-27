@@ -10,6 +10,12 @@ async function greet() {
   greetMsg.value = await invoke("greet", { name: name.value });
 }
 
+async function k8s() {
+  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+  let events = await invoke("list_events");
+  console.log(events);
+}
+
 onMounted(() => {
   setTimeout(() => invoke('close_splashscreen'), 2000)
 });
@@ -35,7 +41,10 @@ onMounted(() => {
     <form class="row" @submit.prevent="greet">
       <input id="greet-input" v-model="name" placeholder="Enter a name..." />
       <button type="submit">Greet</button>
+      
     </form>
+
+    <button type="submit" @click="k8s">Event</button>
     <p>{{ greetMsg }}</p>
   </main>
 </template>
